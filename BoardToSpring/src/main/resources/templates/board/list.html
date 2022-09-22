@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시판</title>
+</head>
+<body>
+	<h1>Spring Boot 게시판</h1> <hr>
+	
+	<table border="1">
+		<col width="50px">
+		<col width="200px">
+		<col width="100px">
+		<col width="75px">
+		<col width="100px">
+	    <thead>
+	    	<!-- 검색 구현 부분
+	  	    <tr>
+	  		    <td colspan="5" align="right">
+	  				<input type="text" id="search" name="search">
+	  				<input type="button" id="searchBtn" name="searchBtn" value="검색">
+	  			</td>
+	  		</tr>
+	  		 -->
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+				<th>작성일자</th>
+			</tr>
+		  </thead>
+	  	<tbody>
+	  		<tr th:each="list: ${list }">
+		  		<td align="center" th:text="${list.boardNo}"></td>
+	  			<td><a th:href="@{/board/viewPost(boardNo=${list.boardNo})}" th:text="${list.title}"></a></td>
+		  		<td th:text="${list.writer}"></td>
+		  		<td align="center" th:text="${list.viewCount}"></td>
+		  		<td align="center" th:text="${list.postTime}"></td>
+		  	</tr>
+		  	<tr>
+		  		<td colspan="5" align="right">
+		  			<a th:href='@{/board/newPost}'><input type="button" id="insertBtn" name="insertBtn" value="새 글 쓰기"></a>
+		  		</td>
+		  	</tr>
+	  	</tbody>
+	</table>
+</body>
+</html>

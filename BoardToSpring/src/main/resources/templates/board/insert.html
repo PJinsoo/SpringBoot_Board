@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<title>새 글 쓰기</title>
+</head>
+
+<body>
+	<h1>새 글 쓰기</h1> <hr>
+	<form id="insertForm" method="post">
+		<table border="1">
+			<tr>
+				<th>제목</th>
+				<td><textarea rows="1" cols="60" name="postTitle"></textarea></td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" name="postWriter"></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="10" cols="60" name="postContent"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+				<input type="button" id="insertBoard" value="작성하기">
+				<a th:href="@{/board/list}"><input type="button" value="취소"></a>
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	<script>
+	$("#insertBoard").click(function(){
+		var form = $("#insertForm").serialize();
+		
+		$.ajax({
+			url : "/board/insert",
+			type : "post",
+			data : form,
+			success: function(data) {      
+				alert("게시글을 작성하셨습니다.");
+				location.href='/board/list';
+			}
+		});
+	});
+	</script>
+</body>
+</html>

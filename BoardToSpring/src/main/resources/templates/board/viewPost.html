@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${post.title}">게시글 조회</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>게시글 조회</h1><hr>
+	<form id="deleteForm" method="post">
+		<input type="hidden" id="boardNo" name="boardNo" th:value="${post.boardNo}">
+	</form>
+	<table border="1">
+		<col width="70px">
+		<col width="200px">
+		<col width="70px">
+		<col width="100px">
+		<tr>
+			<th>제목</th>
+			<td th:text="${post.title}">제목 출력부</td>
+			<th>작성일자</th>
+			<td th:text="${post.postTime}">작성일자 출력부</td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td th:text="${post.writer}">작성자 출력부</td>
+			<th>조회수</th>
+			<td th:text="${post.viewCount}">조회수 출력부</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td colspan="3"><textarea rows="10" cols="60" readonly th:text="${post.content}">내용 출력부</textarea></td>
+		</tr>
+		<tr>
+			<td colspan="4" align="right">
+			<a th:href="@{/board/edit(boardNo=${post.boardNo})}"><input type="button" id="updateBtn" value="수정"></a>
+			<input type="button" id="deletePost" value="삭제">
+			<a th:href="@{/board/list}"><input type="button" id="boardBtn" name="boardBtn" value="게시글 목록"></a>
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+	$("#deletePost").click(function(){
+		var form = $("#deleteForm").serialize();
+		
+		$.ajax({
+			url : "/board/delete",
+			type : "post",
+			data : form,
+			success : function(data) {
+				alert('게시글을 삭제했습니다.');
+				location.href='/board/list';
+			}
+		});
+	});
+	</script>
+</body>
+</html>

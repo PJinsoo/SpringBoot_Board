@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>수정페이지</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>수정하기</h1> <hr>
+	<form id="updateForm" method="post">
+		<input type="hidden" id="boardNo" name="boardNo" th:value="${edit.boardNo}">
+		<table border="1">
+			<tr>
+				<th>제목</th>
+				<td>
+					<textarea rows="1" cols="60" id="editTitle" name="editTitle" th:text="${edit.title}"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td th:text="${edit.writer}"></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="10" cols="60" id="editContent" name="editContent" th:text="${edit.content}"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+				<input type="button" id="updatePost" value="수정하기">
+				<a th:href="@{/board/viewPost(boardNo=${edit.boardNo})}"><input type="button" value="취소"></a>
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	<script>
+	$("#updatePost").click(function(){
+		var form = $("#updateForm").serialize();
+		
+		$.ajax({
+			url : "/board/update",
+			type : "post",
+			data : form,
+			success : function(data) {
+				alert('새로운 게시글을 수정하셨습니다.');
+				location.href='/board/list';
+			}
+		});
+	});
+	</script>
+</body>
+</html>
